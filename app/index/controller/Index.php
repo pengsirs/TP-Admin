@@ -29,9 +29,6 @@ class Index
         $filePath = $file-> getRealPath();//要上传图片的本地路径
     
         $ext = (md5(time()));//上传到七牛后保存的文件名
-        //需要填写你的访问密钥和密钥
-        // $accessKey = "onk7a3DkIlOdm0ct8ga5M9iUr007mLOGRbyV7qcL";
-        // $secretKey = "dnLtxGA1nFcx1Pd5kB6UA1eKGXCGD4o9g1WvVldp";
         $accessKey = $_POST['ak'];
         $secretKey = $_POST['sk'];
         $auth = new Auth($accessKey, $secretKey);//构建鉴权对象

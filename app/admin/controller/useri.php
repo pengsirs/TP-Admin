@@ -5,14 +5,14 @@ namespace app\admin\controller;
 use app\BaseController;
 use think\facade\View;
 use app\admin\model\User;
+use think\facade\Session;
 
 class useri extends BaseController
 {
     public function index()
     {
         // 获取用户信息
-        $this->_user = $_COOKIE['user'];
-        $this->_user = json_decode($this->_user,true);
+        $this->_user = Session::get('user');
         $db = new User();
         $me = $db->get_user_me($this->_user['id']);
         $identity = $this->_user['identity'];
@@ -58,7 +58,7 @@ class useri extends BaseController
             $savename[] = \think\facade\Filesystem::disk('public')->putFile('topic', $files, 'md5');
         }
         //文件目录/storage/topic/
-        $path = env('app.host', 'http://tp.com').'/storage'.'/'.$savename[0];
+        $path = env('app.host').'/storage'.'/'.$savename[0];
         return $path;
     }
 }

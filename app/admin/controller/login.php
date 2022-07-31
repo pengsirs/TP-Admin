@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use think\facade\View;
 use app\admin\model\User;
+use think\facade\Session;
 
 class login
 {
@@ -27,7 +28,8 @@ class login
         $db = new User();
         $data = $db->get_user($username, $password);
         if ($data['username'] != null) {
-            setcookie('user', json_encode($data), time() + 3600, '/');
+            Session::set('user', $data);
+            // setcookie('user', json_encode($data), time() + 3600, '/');
             return redirect("/admin.php/index/index");
         } else {
             echo "<script>alert('用户名或密码错误！');history.go(-1);</script>";

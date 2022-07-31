@@ -7,6 +7,7 @@ use think\App;
 use think\exception\ValidateException;
 use think\Validate;
 use think\facade\View;
+use think\facade\Session;
 
 /**
  * 控制器基础类
@@ -50,12 +51,13 @@ abstract class BaseController
         // 控制器初始化
         $this->initialize();
         // 未登录的用户不允许访问,前台页面不继承此类
-        if(empty($_COOKIE['user'])){
+        if(empty(Session::get('user'))){
             header('Location: /admin.php/login/index');
             exit;
         }else{
-            $this->_user = $_COOKIE['user'];
-            $this->_user = json_decode($this->_user,true);
+            $this->_user = Session::get('user');
+            // $this->_user = $_COOKIE['user'];
+            // $this->_user = json_decode($this->_user,true);
         }
         View::assign([
             'admin' => $this->_user,
